@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnXpo - Quizzes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #1a1a2e;
+            --card-bg: #162447;
+            --primary-color: #e43a19;
+            --secondary-color: #55a630;
+            --text-color: #f0f0f0;
+            --light-text: #a0a0a0;
+            --border-color: #4a5d8c;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 1em;
+            color: var(--light-text);
+            margin-top: 10px;
+        }
+        
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .dropdown label {
+            display: block;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-size: 1.1em;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            color: var(--text-color);
+            appearance: none; /* Removes default dropdown arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23f0f0f0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(228, 58, 25, 0.5);
+        }
+
+        .start-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--secondary-color);
+            color: white;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .start-btn:hover {
+            background: #468c2d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <a href="dashboard.html" class="home-btn">
+        <i class="fas fa-arrow-left"></i> Home
+    </a>
+
+    <div class="container">
+        <div class="header">
+            <h1>Start Your Quiz</h1>
+            <p>Boost your performance by testing your knowledge on different subjects.</p>
+        </div>
+        
+        <div class="dropdown">
+            <label for="language">Select Subject:</label>
+            <select id="language">
+                <option value="python">Python</option>
+                <option value="html">HTML</option>
+                <option value="java">Java</option>
+            </select>
+        </div>
+        
+        <a href="#" class="start-btn">
+            Start Quiz <i class="fas fa-play"></i>
+        </a>
+    </div>
+
+</body>
+</html>

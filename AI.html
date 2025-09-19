@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LearnXpo Demo</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      background: #f9f9f9;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #fff;
+      border-right: 2px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .menu button {
+      background: #f1f1f1;
+      border: none;
+      padding: 12px;
+      margin: 6px 0;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: 0.3s;
+      width: 100%;
+      text-align: left;
+    }
+    .menu button:hover {
+      background: #e0e0e0;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .chat-container {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f1f1f1;
+      padding: 10px;
+      overflow: hidden;
+    }
+    .chat-box {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .message {
+      padding: 10px;
+      border-radius: 15px;
+      max-width: 80%;
+    }
+    .user-message {
+      background-color: #007bff;
+      color: white;
+      align-self: flex-end;
+    }
+    .bot-message {
+      background-color: #e9ecef;
+      color: #333;
+      align-self: flex-start;
+    }
+    .input-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      align-items: center;
+    }
+    #user-input {
+      flex-grow: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .file-input-label {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-block;
+    }
+    #file-input {
+        display: none;
+    }
+    #send-btn {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropbtn {
+      background: #f1f1f1;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .dropbtn:hover {
+      background: #e0e0e0;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 40px;
+      background: #fff;
+      min-width: 150px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0 0 0 / 15%);
+      z-index: 1;
+    }
+    .dropdown-content a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+    }
+    .dropdown-content a:hover {
+      background: #f1f1f1;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .user-image-preview {
+        max-width: 100%;
+        margin-top: 5px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
+    }
+    .file-name-display {
+      font-size: 12px;
+      color: #555;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="logo">LearnXpo</div>
+    <div class="menu">
+      <button>New Chat</button>
+      <button>Search Chat</button>
+      <button>Library</button>
+      <button>New Project</button>
+      <button>History</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <h1>A.I. Assistant</h1>
+    </div>
+    <div class="chat-container">
+      <div id="chat-box" class="chat-box">
+        
+      </div>
+      <div class="input-container">
+      
+        <label for="file-input" class="file-input-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+        </label>
+        <input type="file" id="file-input" accept="image/*, .pdf">
+
+        <input type="text" id="user-input" placeholder="Enter your message...">
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const userInput = document.getElementById("user-input");
+    const sendBtn = document.getElementById("send-btn");
+    const chatBox = document.getElementById("chat-box");
+    const fileInput = document.getElementById("file-input");
+
+    // Replace "" with your actual Gemini API key.
+    // You must get a key from a service like Google AI Studio.
+    const apiKey="AIzaSyC6mbUC9Hh-LBKRDPykTg-JO7oCykeqy1c";
+    // Using a multimodal model that can handle both text and images.
+    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
+
+    // Initialize an object to hold the file data and type
+    let fileData = null;
+    let fileMimeType = null;
+    let fileName = null;
+
+    fileInput.addEventListener("change", handleFileSelect);
+    sendBtn.addEventListener("click", sendMessage);
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+
+    function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (!file) {
+            fileData = null;
+            fileMimeType = null;
+            fileName = null;
+            return;
+        }
+
+        fileName = file.name;
+        fileMimeType = file.type;
+
+        // Check if the file is a PDF or Google Doc-like file
+        if (fileMimeType === "application/pdf" || fileMimeType.includes("google-apps")) {
+            // Explain to the user why these files cannot be processed directly
+            const alertMessage = "Processing PDFs and Google Docs requires a backend service to extract text. This demo only supports image uploads. The file will not be sent to the AI.";
+            // Use a message box instead of alert()
+            const alertBox = document.createElement("div");
+            alertBox.className = "message bot-message";
+            alertBox.textContent = alertMessage;
+            chatBox.appendChild(alertBox);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Reset file input to prevent sending the file
+            fileInput.value = "";
+            fileData = null;
+            fileMimeType = null;
+            fileName = null;
+            return;
+        }
+
+        // If it's an image, read it and convert to Base64
+        if (fileMimeType.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // Get the Base64 data part after the comma
+                fileData = reader.result.split(',')[1];
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // Handle other unsupported file types
+            const alertMessage = "Unsupported file type. Please upload an image.";
+            const alertBox = document.createElement("div");
+            alertBox.className = "message bot-message";
+            alertBox.textContent = alertMessage;
+            chatBox.appendChild(alertBox);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            fileInput.value = "";
+            fileData = null;
+            fileMimeType = null;
+            fileName = null;
+        }
+    }
+
+    async function sendMessage() {
+      const userMessage = userInput.value;
+      if (!userMessage.trim() && !fileData) return;
+
+      // Check for the placeholder API key before making the call
+      if (apiKey === "YOUR_API_KEY") {
+        const errorMsgElement = document.createElement("div");
+        errorMsgElement.className = "message bot-message";
+        errorMsgElement.textContent = "Error: Please get a valid API key and replace 'YOUR_API_KEY' in the code.";
+        chatBox.appendChild(errorMsgElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        return;
+      }
+
+      // Display user message in the chat box
+      const userMsgElement = document.createElement("div");
+      userMsgElement.className = "message user-message";
+      userMsgElement.textContent = userMessage;
+
+      if (fileData && fileMimeType) {
+          const filePreview = document.createElement("img");
+          filePreview.src = `data:${fileMimeType};base64,${fileData}`;
+          filePreview.className = "user-image-preview";
+          userMsgElement.appendChild(filePreview);
+          
+          const fileNameDisplay = document.createElement("div");
+          fileNameDisplay.className = "file-name-display";
+          fileNameDisplay.textContent = fileName;
+          userMsgElement.appendChild(fileNameDisplay);
+      }
+      chatBox.appendChild(userMsgElement);
+      userInput.value = "";
+      fileInput.value = ""; // Reset file input
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Display a "typing" indicator for the model
+      const typingIndicator = document.createElement("div");
+      typingIndicator.className = "message bot-message";
+      typingIndicator.textContent = "Gemini is typing...";
+      chatBox.appendChild(typingIndicator);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      const parts = [];
+      if (userMessage.trim()) {
+          parts.push({ text: userMessage });
+      }
+      if (fileData && fileMimeType) {
+          parts.push({
+              inlineData: {
+                  mimeType: fileMimeType,
+                  data: fileData
+              }
+          });
+      }
+
+      const payload = { contents: [{ parts: parts }] };
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-goog-api-key": apiKey
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("API Error Response:", errorData);
+          throw new Error(`API returned status ${response.status}: ${errorData.error.message}`);
+        }
+
+        const data = await response.json();
+        const modelResponse = data.candidates[0].content.parts[0].text;
+
+        // Display model's response in the chat box
+        typingIndicator.textContent = modelResponse;
+        typingIndicator.className = "message bot-message";
+      } catch (error) {
+        console.error("Error calling the Gemini API:", error);
+        typingIndicator.textContent = "Error: Could not get a response. Please try again. Check the console for details.";
+        typingIndicator.style.color = "red";
+      } finally {
+        // Reset file state
+        fileData = null;
+        fileMimeType = null;
+        fileName = null;
+      }
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+</body>
+</html>

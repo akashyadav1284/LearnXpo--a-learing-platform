@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnXpo - Student Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #1a1a2e;
+            --card-bg: #162447;
+            --primary-color: #e43a19;
+            --secondary-color: #55a630;
+            --text-color: #f0f0f0;
+            --light-text: #a0a0a0;
+            --border-color: #4a5d8c;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .dashboard-container {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            margin: auto;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+        
+        /* Sidebar Styling */
+        .sidebar {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .logo {
+            display: block;
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+        
+        .student-info-section h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: var(--primary-color);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .info-item .icon {
+            color: var(--primary-color);
+            font-size: 1.2em;
+        }
+        
+        .info-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-details label {
+            font-size: 0.9em;
+            color: var(--light-text);
+            margin-bottom: 4px;
+        }
+        
+        .info-details .value {
+            font-weight: 600;
+        }
+        
+        .info-details select, .info-details input {
+            background-color: #2c395e;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 5px;
+        }
+        
+        .signout-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1em;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .signout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Main Content Styling */
+        .main-content {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .dashboard-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .dashboard-card h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: var(--primary-color);
+        }
+
+        .dashboard-card p {
+            color: var(--light-text);
+        }
+
+        .dashboard-card h2 {
+            font-size: 2.5em;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: var(--input-bg);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: var(--secondary-color);
+            text-align: center;
+            line-height: 20px;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .cta-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            background-color: #ff5231;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: static;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <img src="learnxpro.jpeg" alt="LearnXpo Logo" class="logo">
+            
+            <section class="student-info-section">
+                <h3>Student Profile</h3>
+                <form class="student-form" onsubmit="return false;">
+                    <div class="info-item">
+                        <i class="fas fa-user icon"></i>
+                        <div class="info-details">
+                            <label>Name</label>
+                            <span class="value" id="studentName"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-envelope icon"></i>
+                        <div class="info-details">
+                            <label>Email</label>
+                            <span class="value" id="studentEmail"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-mobile-alt icon"></i>
+                        <div class="info-details">
+                            <label>Phone</label>
+                            <input type="tel" id="studentPhoneInput" placeholder="Phone number">
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <i class="fas fa-graduation-cap icon"></i>
+                        <div class="info-details">
+                            <label>Course</label>
+                            <select id="studentCourseSelect">
+                                <option value="" disabled selected>Select Course</option>
+                                <option>B.tech</option>
+                                <option>M.tech</option>
+                                <option>BCA</option>
+                                <option>MCA</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            
+            <button class="signout-btn" onclick="window.location.href='login.html'">
+                <i class="fas fa-sign-out-alt"></i> Sign Out
+            </button>
+        </aside>
+
+        <main class="main-content">
+            <h1 style="font-size: 2.5em; color: #e43a19;">Dashboard Overview</h1>
+            
+            <div class="card-grid">
+                <div class="dashboard-card">
+                    <h3>Course Progress</h3>
+                    <p>Overall Course Progression</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 75%;">75%</div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Hours Practiced</h3>
+                    <p>Total study time this week</p>
+                    <h2>15 hrs</h2>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>PPT to Summary</h3>
+                    <p>Upload a presentation file (.ppt/.pptx) to get a quick summary.</p>
+                    <input type="file" accept=".ppt,.pptx" style="margin-bottom: 10px;">
+                    <button class="cta-btn">Convert</button>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Mind Maps</h3>
+                    <p>Click to upload a document to generate a mind map.</p>
+                    <button class="cta-btn">Generate</button>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="dashboard-card">
+                    <h3>Quizzes</h3>
+                    <p>Test your knowledge with quick quizzes on your subjects.</p>
+                    <a href="quiz.html" class="cta-btn">Start Quiz</a>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Ask a Question</h3>
+                    <p>Drop your doubts and get answers from our AI assistant or instructors.</p>
+                    <a href="AI.html" class="cta-btn">Ask AI</a>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Resources</h3>
+                    <p>Access a collection of useful links, PDFs, and recommended reading materials.</p>
+                    <a href="#" class="cta-btn">Open Resources</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the stored values from localStorage
+            const name = localStorage.getItem('studentName');
+            const email = localStorage.getItem('studentEmail');
+            const phone = localStorage.getItem('studentPhone');
+            const course = localStorage.getItem('studentCourse');
+            
+            // Display the values on the page
+            if (name) {
+                document.getElementById('studentName').textContent = name;
+            }
+            if (email) {
+                document.getElementById('studentEmail').textContent = email;
+            }
+            if (phone) {
+                document.getElementById('studentPhoneInput').value = phone;
+            }
+            if (course) {
+                const courseSelect = document.getElementById('studentCourseSelect');
+                for (let i = 0; i < courseSelect.options.length; i++) {
+                    if (courseSelect.options[i].value === course) {
+                        courseSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

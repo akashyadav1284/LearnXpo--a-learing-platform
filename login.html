@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnXpo - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1a2e;
+            --card-bg: #162447;
+            --primary-color: #e43a19;
+            --text-color: #f0f0f0;
+            --input-bg: #2c395e;
+            --border-color: #4a5d8c;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px var(--shadow-color);
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2.legend {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        h2.legend::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            color: var(--text-color);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(228, 58, 25, 0.5);
+        }
+
+        .input-group input::placeholder {
+            color: #a0a0a0;
+        }
+
+        .radio-group {
+            margin-bottom: 25px;
+        }
+
+        .radio-group label {
+            display: inline-block;
+            margin-right: 20px;
+            font-weight: 400;
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 5px;
+            accent-color: var(--primary-color);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button-group button, .button-group input[type="reset"] {
+            width: 50%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .button-group button {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .button-group input[type="reset"] {
+            background-color: #607d8b;
+            color: #fff;
+        }
+
+        .button-group button:hover, .button-group input[type="reset"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .motto {
+            font-size: 1.2em;
+            font-weight: 300;
+            margin-top: 20px;
+            color: #a0a0a0;
+        }
+    </style>
+</head>
+<body>
+   <div class="header">
+       <h1>LearnXpo</h1>
+   </div>
+
+   <div class="login-container">
+       <form id="loginForm">
+           <marquee><h2 class="legend">Student Login</h2></marquee>
+           
+           <div class="input-group">
+               <label for="nameInput">Name</label>
+               <input type="text" id="nameInput" placeholder="Your Full Name" required name="myusername">
+           </div>
+           
+           <div class="input-group">
+               <label for="phoneInput">Mobile</label>
+               <input type="number" id="phoneInput" placeholder="Mobile Number" required>
+           </div>
+           
+           <div class="input-group">
+               <label for="emailInput">Email</label>
+               <input type="email" id="emailInput" placeholder="Email Address" required>
+           </div>
+           
+           <div class="input-group">
+               <label for="ageInput">Age</label>
+               <input type="number" id="ageInput" min="17" max="25" placeholder="Age (17-25)">
+           </div>
+           
+           <div class="radio-group">
+               <label>Gender:</label>
+               <input type="radio" name="mygender" value="Male"> Male 
+               <input type="radio" name="mygender" value="Female"> Female
+           </div>
+
+           <div class="input-group">
+               <label for="courseSelect">Course</label>
+               <select id="courseSelect">
+                   <option disabled selected>Select Your Course</option>
+                   <option>B.tech</option>
+                   <option>M.tech</option>
+                   <option>BCA</option>
+                   <option>MCA</option>
+               </select>
+           </div>
+
+           <div class="button-group">
+               <input type="reset" value="Clear Form">
+               <button type="submit">Login</button>
+           </div>
+       </form>
+   </div> 
+
+   <div class="motto">
+       CHASE YOUR DREAMS
+   </div>
+   
+   <script>
+       document.getElementById('loginForm').addEventListener('submit', function(event) {
+           event.preventDefault(); // Prevents the form from submitting in the traditional way
+
+           const name = document.getElementById('nameInput').value;
+           const email = document.getElementById('emailInput').value;
+           const phone = document.getElementById('phoneInput').value;
+           const course = document.getElementById('courseSelect').value;
+           
+           // Store the values in localStorage
+           localStorage.setItem('studentName', name);
+           localStorage.setItem('studentEmail', email);
+           localStorage.setItem('studentPhone', phone);
+           localStorage.setItem('studentCourse', course);
+
+           // Redirect to the dashboard page
+           window.location.href = 'dashboard.html';
+       });
+   </script>
+</body>
+</html>
