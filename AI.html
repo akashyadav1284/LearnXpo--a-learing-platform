@@ -208,9 +208,10 @@
     const chatBox = document.getElementById("chat-box");
     const fileInput = document.getElementById("file-input");
 
-    // Replace "" with your actual Gemini API key.
+    // Replace "YOUR_API_KEY" with your actual Gemini API key.
     // You must get a key from a service like Google AI Studio.
-    const apiKey="AIzaSyC6mbUC9Hh-LBKRDPykTg-JO7oCykeqy1c";
+    const apiKey = "YOUR_API_KEY"; // Do NOT hardcode this in production.
+    // Ensure you use a backend (e.g., Node.js with dotenv) to securely inject the key.
     // Using a multimodal model that can handle both text and images.
     const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
 
